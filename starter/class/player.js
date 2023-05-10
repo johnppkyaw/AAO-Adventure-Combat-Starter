@@ -33,34 +33,10 @@ class Player extends Character {
     }
   }
 
-  takeItem(itemName) {
-
-    // Fill this in
-
-  }
-
-  dropItem(itemName) {
-
-    // Fill this in
-
-  }
-
-  eatItem(itemName) {
-
-    // Fill this in
-
-  }
-
-  getItemByName(name) {
-
-    // Fill this in
-
-  }
 
   hit(name) {
-
-    // Fill this in
-
+    this.currentRoom.getEnemyByName(name).applyDamage(this.strength);
+    this.currentRoom.getEnemyByName(name).attackTarget = this;
   }
 
   die() {
@@ -68,8 +44,41 @@ class Player extends Character {
     process.exit();
   }
 
+  takeItem(itemName) {
+    this.items.push(this.currentRoom.getItemByName(itemName));
+  }
+
+  dropItem(itemName) {
+    this.currentRoom.items.push(this.getItemByName(itemName));
+  }
+
+  eatItem(itemName) {
+    // Check if item is instanceof food
+    let index = -1;
+    for (let i = 0; i < this.items.length; i++) {
+        if (this.items[i].name === itemName && (this.items[i] instanceof Food)) {
+            index = i;
+            break;
+        }
+    }
+    if (index !== -1) {
+        this.items.splice(index, 1);
+    }
+  }
+
+  getItemByName(name) {
+    let index = -1;
+    for (let i = 0; i < this.items.length; i++) {
+        if (this.items[i].name === name) {
+            index = i;
+        }
+        break;
+    }
+    if (index !== -1) {
+        return this.items.splice(index, 1).pop();
+    }
+  }
+
 }
 
-module.exports = {
-  Player,
-};
+module.exports = {Player};
