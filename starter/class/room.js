@@ -1,5 +1,6 @@
-class Room {
 
+
+class Room {
   constructor(name, description) {
     this.name = name;
     this.description = description;
@@ -13,17 +14,23 @@ class Room {
   }
 
   printRoom() {
+    const { World } = require('./world');
     console.clear();
     console.log("");
     console.log(this.name);
     console.log("");
     console.log(this.description);
     console.log("");
+    console.log("");
+    console.log("");
+    console.log(`Player: ${World.player.name} (HP: ${World.player.health})`);
+    World.player.printInventory();
+    console.log("");
     if (this.getEnemies().length > 0) {
-      console.log(`Enemies: ${this.getEnemies().map(enemy => enemy.name).join(", ")}`);
+      console.log(`Enemies: ${this.getEnemies().map(enemy => enemy.name + " (HP: " + enemy.health + ")").join(", ")}`);
     }
     if (this.items.length > 0) {
-      console.log(`Items: ${this.items.map(item => item.name).join(", ")}`);
+      console.log(`Items in the room: ${this.items.map(item => item.name).join(", ")}`);
     }
     console.log(this.getExitsString());
     console.log("");

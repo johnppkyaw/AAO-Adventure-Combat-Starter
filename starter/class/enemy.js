@@ -27,7 +27,6 @@ class Enemy extends Character {
         return;
       }
     }
-    this.alert("Enemy spotted!")
   }
 
   takeSandwich() {
@@ -53,9 +52,11 @@ class Enemy extends Character {
   attack() {
     if (this.attackTarget === null) {
     } else {
-      this.act();
+      setTimeout(() => {console.log(`Enemy ${this.name} attacked back with ${this.strength} damage and fled`)}, this.cooldown + 2000);
+      this.rest();
       this.attackTarget.applyDamage(this.strength);
       this.cooldown += 1000;
+      this.randomMove();
     }
   }
 

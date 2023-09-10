@@ -17,11 +17,12 @@ function printHelp() {
   console.log("  Type 'h' for help");
   console.log("  Type 'q' to quit");
   console.log("  Type 'l' to look around");
+  console.log("  Type 'n', 's', 'e', 'w' to move");
+  console.log("  Type 'hit <enemy>' to hit enemy");
   console.log("  Type 'i' to check your inventory");
   console.log("  Type 'take <item>' to take an item");
   console.log("  Type 'drop <item>' to drop an item");
   console.log("  Type 'eat <item>' to eat a food item");
-  console.log("  Type 'n', 's', 'e', 'w' to move");
   console.log("");
 }
 

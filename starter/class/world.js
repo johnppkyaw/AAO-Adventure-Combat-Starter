@@ -7,8 +7,10 @@ class World {
 
   static rooms = {};
   static enemies = [];
+  static player = null;
 
   static setPlayer(player) {
+    this.player = player;
     for (let i = 0 ; i < World.enemies.length ; i++) {
       if (World.enemies[i]) {
         World.enemies[i].setPlayer(player);

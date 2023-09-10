@@ -12,10 +12,11 @@ class Character {
 
   //remove health points from the character
   applyDamage(amount) {
-    this.health -= amount;
     if (this.health <= 0) {
       this.die();
+      return;
     }
+    this.health -= amount;
   }
 
 

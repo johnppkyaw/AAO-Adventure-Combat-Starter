@@ -35,9 +35,16 @@ class Player extends Character {
 
   hit(name) {
     const targetEnemy = this.currentRoom.getEnemyByName(name);
+    setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), targetEnemy.cooldown + 1000);
+    targetEnemy.applyDamage(this.strength);
+    console.log(`You attacked ${name}!`);
+    targetEnemy.attackTarget = this;
+    targetEnemy.attack();
+    if(this.health <= 0) {
+      this.die();
+      return;
+    }
 
-    this.currentRoom.getEnemyByName(name).applyDamage(this.strength);
-    this.currentRoom.getEnemyByName(name).attackTarget = this;
   }
 
   die() {
