@@ -19,6 +19,7 @@ class World {
   static startGame() {
     for (let i = 0 ; i < World.enemies.length ; i++) {
       if (World.enemies[i]) {
+        World.enemies[i].randomMove();
         World.enemies[i].rest();
       }
     }

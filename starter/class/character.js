@@ -10,6 +10,7 @@ class Character {
 
   }
 
+  //remove health points from the character
   applyDamage(amount) {
     this.health -= amount;
     if (this.health <= 0) {
@@ -17,10 +18,14 @@ class Character {
     }
   }
 
+
   die() {
+    //drops the dead character's items in the current room
     this.items.forEach(item => {
       this.currentRoom.items.push(item);
     })
+
+    //empties character's item list and room
     this.items = [];
     this.currentRoom = null;
   }

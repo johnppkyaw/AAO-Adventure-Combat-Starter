@@ -50,5 +50,10 @@ module.exports = {
       description: "A mean-looking goblin",
       room: 3
     },
+    {
+      name: "snake",
+      description: "A venamous snake",
+      room: 5
+    }
   ]
 }

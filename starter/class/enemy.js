@@ -11,7 +11,6 @@ class Enemy extends Character {
     this.player = player;
   }
 
-
   randomMove() {
     //shuffle direction array;
     let direction = ['n', 's', 'e', 'w'];
@@ -28,6 +27,7 @@ class Enemy extends Character {
         return;
       }
     }
+    this.alert("Enemy spotted!")
   }
 
   takeSandwich() {
@@ -43,26 +43,21 @@ class Enemy extends Character {
 
   rest() {
     // Wait until cooldown expires, then act
-    const resetCooldown = function() {
+    const resetCooldown = () => {
       this.cooldown = 0;
       this.act();
     };
-    setTimeout(resetCooldown, this.cooldown);
+    setTimeout(resetCooldown.bind(this), this.cooldown);
   }
 
   attack() {
     if (this.attackTarget === null) {
     } else {
+      this.act();
       this.attackTarget.applyDamage(this.strength);
       this.cooldown += 1000;
     }
   }
-
-  applyDamage(amount) {
-    // Fill this in
-  }
-
-
 
   act() {
     if (this.health <= 0) {
@@ -71,19 +66,13 @@ class Enemy extends Character {
       this.rest();
     } else {
       this.scratchNose();
-      this.rest();
     }
-
-    // Fill this in
   }
-
 
   scratchNose() {
     this.cooldown += 1000;
     this.alert(`${this.name} scratches its nose`);
   }
-
-
 }
 
 // let room = new Room("Test Room", "A test room");

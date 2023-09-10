@@ -28,13 +28,14 @@ class Player extends Character {
     } else {
       console.log(`${this.name} is carrying:`);
       for (let i = 0 ; i < this.items.length ; i++) {
-        console.log(`  ${this.items[i].name}`);
+        console.log(`${this.items[i].name}\n`);
       }
     }
   }
 
-
   hit(name) {
+    const targetEnemy = this.currentRoom.getEnemyByName(name);
+
     this.currentRoom.getEnemyByName(name).applyDamage(this.strength);
     this.currentRoom.getEnemyByName(name).attackTarget = this;
   }
@@ -63,7 +64,10 @@ class Player extends Character {
     }
     if (index !== -1) {
         this.items.splice(index, 1);
+        console.log(`${this.name} has eaten ${itemName}`);
+        return;
     }
+    console.log("The item does not exist or is not a food!")
   }
 
   getItemByName(name) {
