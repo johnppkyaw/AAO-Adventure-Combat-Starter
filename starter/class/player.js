@@ -33,18 +33,44 @@ class Player extends Character {
     }
   }
 
+  talk(shopkeeperName) {
+    const targetShopkeeper = this.currentRoom.getShopkeeperByName(shopkeeperName);
+    const targetEnemy = this.currentRoom.getEnemyByName(shopkeeperName);
+    if(!targetShopkeeper) {
+      if(targetEnemy) {
+        console.log('You cannot talk to an enemy!');
+        setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
+      } else {
+        console.log('You cannot talk to the shopkeeper who is not at the current location!');
+        setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
+      }
+      return;
+    }
+    console.log(`${targetShopkeeper.name} says ${targetShopkeeper.description}`)
+  }
+
   hit(name) {
     const targetEnemy = this.currentRoom.getEnemyByName(name);
-    setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), targetEnemy.cooldown + 1000);
+    const targetShopkeeper = this.currentRoom.getShopkeeperByName(name);
+    if(!targetEnemy) {
+      if(targetShopkeeper) {
+        console.log('You cannot attack the shopkeepers!');setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
+      } else {
+        console.log('You cannot attack the enemy who is not at the current location!');
+        setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
+      }
+      return;
+    }
     targetEnemy.applyDamage(this.strength);
     console.log(`You attacked ${name}!`);
     targetEnemy.attackTarget = this;
+    const enemyCooldown = targetEnemy.cooldown;
     targetEnemy.attack();
+    setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), enemyCooldown + 4000);
     if(this.health <= 0) {
       this.die();
       return;
     }
-
   }
 
   die() {

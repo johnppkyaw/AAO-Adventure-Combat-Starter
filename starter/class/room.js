@@ -1,5 +1,3 @@
-
-
 class Room {
   constructor(name, description) {
     this.name = name;
@@ -11,6 +9,11 @@ class Room {
   getEnemies() {
     const { World } = require('./world');
     return World.getEnemiesInRoom(this);
+  }
+
+  getShopkeepers() {
+    const { World } = require('./world');
+    return World.getShopkeeperInRoom(this);
   }
 
   printRoom() {
@@ -25,6 +28,8 @@ class Room {
     console.log("");
     console.log(`Player: ${World.player.name} (HP: ${World.player.health})`);
     World.player.printInventory();
+    console.log(`Shopkeeper: ${this.getShopkeepers().map(shopkeeper => shopkeeper.name).join(", ") || "Unavailable"}`)
+    console.log(`Enemies left: ${World.enemies.length}`)
     console.log("");
     if (this.getEnemies().length > 0) {
       console.log(`Enemies: ${this.getEnemies().map(enemy => enemy.name + " (HP: " + enemy.health + ")").join(", ")}`);
@@ -73,8 +78,11 @@ class Room {
 
   getEnemyByName(name) {
     return this.getEnemies().filter(enemy => enemy.name === name).pop();
+  }
 
-}
+  getShopkeeperByName(name) {
+    return this.getShopkeepers().filter(enemy => enemy.name.toLowerCase() === name.toLowerCase()).pop();
+  }
 }
 
 module.exports = {Room};

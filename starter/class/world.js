@@ -2,11 +2,13 @@ const { Room } = require('./room');
 const { Item } = require('./item');
 const { Food } = require('./food');
 const { Enemy } = require('./enemy');
+const { Shopkeeper } = require('./shopkeeper');
 
 class World {
 
   static rooms = {};
   static enemies = [];
+  static shopkeepers = [];
   static player = null;
 
   static setPlayer(player) {
@@ -31,11 +33,16 @@ class World {
     return World.enemies.filter(enemy => enemy.currentRoom === room);
   }
 
+  static getShopkeeperInRoom(room) {
+    return World.shopkeepers.filter(shopkeeper => shopkeeper.currentRoom === room);
+  }
+
   static loadWorld(worldData) {
 
     const roomList = worldData.rooms;
     const itemList = worldData.items;
     const enemyList = worldData.enemies;
+    const shopkeepers = worldData.shopkeepers;
 
     // Instantiate new room objects
     // Get name, id and description from room data
@@ -87,6 +94,13 @@ class World {
       World.enemies.push(newEnemy);
     }
 
+    // Instantiate shopkeepers
+    for (let i = 0; i < shopkeepers.length; i++) {
+      let shopkeeperData = shopkeepers[i];
+      let shopkeeperRoom = World.rooms[shopkeeperData.room];
+      let newShopkeeper = new Shopkeeper(shopkeeperData.name, shopkeeperData.description, shopkeeperRoom, shopkeeperData.isEnemy);
+      World.shopkeepers.push(newShopkeeper);
+    }
   }
 }
 

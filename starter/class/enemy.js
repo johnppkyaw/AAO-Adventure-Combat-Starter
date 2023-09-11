@@ -52,11 +52,14 @@ class Enemy extends Character {
   attack() {
     if (this.attackTarget === null) {
     } else {
-      setTimeout(() => {console.log(`Enemy ${this.name} attacked back with ${this.strength} damage and fled`)}, this.cooldown + 2000);
+      const cooldown = this.cooldown;
       this.rest();
+      setTimeout(() => {
+        console.log(`Enemy ${this.name} attacked back with ${this.strength} damage and fled`);
+        this.randomMove.bind(this)();
+      }, cooldown + 2000);
       this.attackTarget.applyDamage(this.strength);
       this.cooldown += 1000;
-      this.randomMove();
     }
   }
 
