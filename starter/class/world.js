@@ -3,6 +3,8 @@ const { Item } = require('./item');
 const { Food } = require('./food');
 const { Enemy } = require('./enemy');
 const { Shopkeeper } = require('./shopkeeper');
+const { Armor } = require('./armor');
+const { Weapon } = require('./weapon');
 
 class World {
 
@@ -10,6 +12,8 @@ class World {
   static enemies = [];
   static shopkeepers = [];
   static player = null;
+  static weapons = [];
+  static armors = [];
 
   static setPlayer(player) {
     this.player = player;
@@ -43,6 +47,9 @@ class World {
     const itemList = worldData.items;
     const enemyList = worldData.enemies;
     const shopkeepers = worldData.shopkeepers;
+    const weaponList = worldData.weapons;
+    const armorList = worldData.armors;
+
 
     // Instantiate new room objects
     // Get name, id and description from room data
@@ -83,6 +90,20 @@ class World {
 
       let itemRoom = World.rooms[itemData.room];
       itemRoom.items.push(newItem);
+   }
+
+   //Instantiate Weapons
+   for (let i = 0; i < weaponList.length; i++) {
+    let weaponData = weaponList[i];
+    let newWeapon = new Weapon(weaponData.choice, weaponData.name, weaponData.description, weaponData.damageBonus, weaponData.isWeapon, weaponData.cost);
+    World.weapons.push(newWeapon);
+   }
+
+   //Instantiate Armors
+   for (let i = 0; i < armorList.length; i++) {
+    let armorData = armorList[i];
+    let newArmor = new Armor(armorData.choice, armorData.name, armorData.description, armorData.deflectBonus, armorData.isArmor, armorData.cost);
+    World.armors.push(newArmor);
    }
 
     // Instantiate enemies

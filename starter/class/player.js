@@ -6,6 +6,9 @@ class Player extends Character {
 
   constructor(name, startingRoom) {
     super(name, "main character", startingRoom);
+    this.weapon = null;
+    this.armor = null;
+    this.deflect = 0;
   }
 
   move(direction) {
@@ -48,6 +51,47 @@ class Player extends Character {
     }
     console.log(`${targetShopkeeper.name} says ${targetShopkeeper.description}`)
   }
+
+  buyEquipment(choice) {
+    const { World } = require('./world');
+    const weaponPicked = World.weapons.find(weapon => weapon.choice.toLowerCase() === choice.toLowerCase());
+    console.log(weaponPicked);
+    console.log(weaponPicked.name);
+    if (weaponPicked) {
+      //check if player already has weapon equipped
+      if(this.weapon) {
+        console.log(`You already have ${this.weapon.name} equiped. Sell that first`)
+        return;
+        //check if player can afford it
+      } else if (weaponPicked.gold > this.gold) {
+        console.log(`Not enough gold!`)
+        return;
+      } else {
+        this.weapon = weaponPicked;
+        this.gold -= weaponPicked.cost;
+        this.strength += weaponPicked.damageBonus;
+        console.log(`You have purchased ${weaponPicked.name} and increased your strength to ${this.strength}!`);
+      }
+    } else {
+      const armorPicked = World.weapons.find(weapon => weapon.choice.toLowerCase() === choice.toLowerCase());
+      if (armorPicked) {
+        //check if player already has armor equipped
+        if(this.armor) {
+          console.log(`You already have ${this.armor.name} equiped. Sell that first`)
+          return;
+          //check if player can afford it
+        } else if (armorPicked.gold > this.gold) {
+          console.log(`Not enough gold!`)
+          return;
+        } else {
+          this.armor = armorPicked;
+          this.deflect += armorPicked.deflectBonus;
+          console.log(`You have purchased ${armorPicked.name} which deflect enemy's attack by ${armorPicked.deflectBonus}!`);
+        }
+      }
+    }
+  }
+
 
   hit(name) {
     const targetEnemy = this.currentRoom.getEnemyByName(name);

@@ -100,6 +100,16 @@ function processCommand() {
       const command = cmd.split(" ")
       let shopkeeperName = command[1] + ' ' + command[2];
       player.talk(shopkeeperName);
+      setTimeout(() => {
+        player.currentRoom.printRoomWithEquipments()
+      }, 3000);
+
+    } else if (cmd.startsWith("buy ")) {
+      const choice = cmd.split(" ")[1].toLowerCase()
+      player.buyEquipment(choice);
+      // setTimeout(() => {
+      //   player.currentRoom.printRoomWithEquipments()
+      // }, 3000);
 
     } else {
       console.log("Invalid command. Type 'h' for help.");

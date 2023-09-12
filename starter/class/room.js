@@ -4,6 +4,7 @@ class Room {
     this.description = description;
     this.exits = {};
     this.items = [];
+    this.gold = 0;
   }
 
   getEnemies() {
@@ -18,6 +19,9 @@ class Room {
 
   printRoom() {
     const { World } = require('./world');
+    const shopkeepers = this.getShopkeepers(); //array
+    const enemies = this.getEnemies(); //array
+
     console.clear();
     console.log("");
     console.log(this.name);
@@ -28,17 +32,52 @@ class Room {
     console.log("");
     console.log(`Player: ${World.player.name} (HP: ${World.player.health})`);
     World.player.printInventory();
-    console.log(`Shopkeeper: ${this.getShopkeepers().map(shopkeeper => shopkeeper.name).join(", ") || "Unavailable"}`)
-    console.log(`Enemies left: ${World.enemies.length}`)
     console.log("");
-    if (this.getEnemies().length > 0) {
-      console.log(`Enemies: ${this.getEnemies().map(enemy => enemy.name + " (HP: " + enemy.health + ")").join(", ")}`);
+
+    //Prints shopkeepers if in the same room as the player
+    if (shopkeepers.length > 0) {
+      console.log(`Shopkeeper: ${shopkeepers.map(shopkeeper => shopkeeper.name).join(", ")}`)
     }
+
+    console.log("");
+
+    //Prints enemies if in the same room as the player
+    if(enemies.length > 0) {
+      console.log(`Enemies in current location: ${enemies.map(enemy => enemy.name + " (HP: " + enemy.health + ")").join(", ")}`);
+    }
+
+    console.log(`Total enemies left: ${World.enemies.length}`)
+    console.log("");
     if (this.items.length > 0) {
       console.log(`Items in the room: ${this.items.map(item => item.name).join(", ")}`);
     }
+    if (this.gold > 0) {
+      console.log(`Free gold in the room: ${this.gold}`);
+    }
     console.log(this.getExitsString());
     console.log("");
+  }
+
+  printRoomWithEquipments() {
+    const { World } = require('./world');
+    this.printRoom();
+
+    console.log(`Here are weapons and armors available for sale.  Type "buy <choice>" to buy the weapon or armor.  You have ${World.player.gold} gold to spend.`)
+
+    //Print weapons
+    World.weapons.forEach(weapon => {
+      console.log(`Choice: ${weapon.choice} | ${weapon.name} | Damage bonus: +${weapon.damageBonus} | Cost: ${weapon.cost}`)
+    })
+    console.log("")
+
+    //Print armors
+    World.armors.forEach(armor => {
+      console.log(`Choice: ${armor.choice} | ${armor.name} | Deflect bonus: +${armor.deflectBonus} | Cost: ${armor.cost}`)
+    })
+
+
+
+
   }
 
   getExits() {

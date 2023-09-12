@@ -82,8 +82,60 @@ module.exports = {
     },
     {
       name: "snake",
-      description: "A venamous snake",
+      description: "A venomous snake",
       room: 5
+    }
+  ],
+  weapons: [
+    {
+      choice: "WA",
+      name: "Standard Sword",
+      description: "adds bonus damage to your attack",
+      damageBonus: 10,
+      isWeapon: true,
+      cost: 100
+    },
+    {
+      choice: "WB",
+      name: "Excalibar",
+      description: "adds bonus damage to your attack",
+      damageBonus: 20,
+      isWeapon: true,
+      cost: 200
+    },
+    {
+      choice: "WC",
+      name: "Daedric Sword",
+      description: "adds bonus damage to your attack",
+      damageBonus: 40,
+      isWeapon: true,
+      cost: 400
+    }
+  ],
+  armors: [
+    {
+      choice: "AA",
+      name: "Leather Armor",
+      description: "deflects damage from enemy's attack",
+      deflectBonus: 10,
+      isArmor: true,
+      cost: 100
+    },
+    {
+      choice: "AB",
+      name: "Ebony Armor",
+      description: "deflects damage from enemy's attack",
+      deflectBonus: 20,
+      isArmor: true,
+      cost: 200
+    },
+    {
+      choice: "AC",
+      name: "Daedric Armor",
+      description: "deflects damage from enemy's attack",
+      deflectBonus: 40,
+      isArmor: true,
+      cost: 400
     }
   ],
   shopkeepers: [
