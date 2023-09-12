@@ -20,7 +20,6 @@ function printHelp() {
   console.log("  Type 'n', 's', 'e', 'w' to move");
   console.log("  Type 'hit <enemy>' to hit enemy");
   console.log("  Type 'i' to check your inventory");
-  console.log("  Type 'talk <shopkeeper>' to buy an equipment")
   console.log("  Type 'take <item>' to take an item");
   console.log("  Type 'drop <item>' to drop an item");
   console.log("  Type 'eat <item>' to eat a food item");
@@ -80,11 +79,13 @@ function processCommand() {
       let itemName = cmd.split(" ")[1];
 
       player.takeItem(itemName);
+      player.currentRoom.printRoom();
 
     } else if (cmd.startsWith("drop ")) {
       let itemName = cmd.split(" ")[1];
 
       player.dropItem(itemName);
+      player.currentRoom.printRoom();
 
     } else if (cmd.startsWith("eat ")) {
       let itemName = cmd.split(" ")[1];
@@ -96,20 +97,13 @@ function processCommand() {
 
       player.hit(enemyName);
 
-    } else if (cmd.startsWith("talk ")) {
-      const command = cmd.split(" ")
-      let shopkeeperName = command[1] + ' ' + command[2];
-      player.talk(shopkeeperName);
-      setTimeout(() => {
-        player.currentRoom.printRoomWithEquipments()
-      }, 3000);
-
     } else if (cmd.startsWith("buy ")) {
       const choice = cmd.split(" ")[1].toLowerCase()
+      console.clear();
       player.buyEquipment(choice);
-      // setTimeout(() => {
-      //   player.currentRoom.printRoomWithEquipments()
-      // }, 3000);
+      setTimeout(() => {
+        player.currentRoom.printRoom();
+      }, 3000);
 
     } else {
       console.log("Invalid command. Type 'h' for help.");

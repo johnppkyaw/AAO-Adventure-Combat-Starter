@@ -36,27 +36,49 @@ class Player extends Character {
     }
   }
 
-  talk(shopkeeperName) {
-    const targetShopkeeper = this.currentRoom.getShopkeeperByName(shopkeeperName);
-    const targetEnemy = this.currentRoom.getEnemyByName(shopkeeperName);
-    if(!targetShopkeeper) {
-      if(targetEnemy) {
-        console.log('You cannot talk to an enemy!');
-        setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
-      } else {
-        console.log('You cannot talk to the shopkeeper who is not at the current location!');
-        setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
-      }
-      return;
+  printEquipments() {
+    //prints the equipped weapon
+    if (!this.weapon) {
+      console.log(`${this.name} is not equipped with any weapons.`);
+    } else {
+      console.log(`${this.name} is currently equipped with ${this.weapon}.`);
     }
-    console.log(`${targetShopkeeper.name} says ${targetShopkeeper.description}`)
+
+    //prints the equipped armor
+    if (!this.armor) {
+      console.log(`${this.name} is not equipped with any armors.`);
+    } else {
+      console.log(`${this.name} is currently equipped with ${this.armor}.`);
+    }
+
+
   }
 
+  // talk(shopkeeperName) {
+  //   const targetShopkeeper = this.currentRoom.getShopkeeperByName(shopkeeperName);
+  //   const targetEnemy = this.currentRoom.getEnemyByName(shopkeeperName);
+  //   if(!targetShopkeeper) {
+  //     if(targetEnemy) {
+  //       console.log('You cannot talk to an enemy!');
+  //       setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
+  //     } else {
+  //       console.log('You cannot talk to the shopkeeper who is not at the current location!');
+  //       setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
+  //     }
+  //     return;
+  //   }
+  //   console.log(`${targetShopkeeper.name} says ${targetShopkeeper.description}`)
+  // }
+
+  //buy equipment
   buyEquipment(choice) {
     const { World } = require('./world');
+    const shopkeeper = World.getShopkeeperInRoom(this.currentRoom)
+    if(shopkeeper.length === 0) {
+      console.log(`Equipment choice not found!  Shopkeeper must also be available!`)
+      return;
+    }
     const weaponPicked = World.weapons.find(weapon => weapon.choice.toLowerCase() === choice.toLowerCase());
-    console.log(weaponPicked);
-    console.log(weaponPicked.name);
     if (weaponPicked) {
       //check if player already has weapon equipped
       if(this.weapon) {
@@ -71,6 +93,7 @@ class Player extends Character {
         this.gold -= weaponPicked.cost;
         this.strength += weaponPicked.damageBonus;
         console.log(`You have purchased ${weaponPicked.name} and increased your strength to ${this.strength}!`);
+        return;
       }
     } else {
       const armorPicked = World.weapons.find(weapon => weapon.choice.toLowerCase() === choice.toLowerCase());
@@ -86,11 +109,16 @@ class Player extends Character {
         } else {
           this.armor = armorPicked;
           this.deflect += armorPicked.deflectBonus;
+          this.gold -= weaponPicked.cost;
           console.log(`You have purchased ${armorPicked.name} which deflect enemy's attack by ${armorPicked.deflectBonus}!`);
+          return;
         }
       }
     }
   }
+
+  //sell equipement
+  //TBD...
 
 
   hit(name) {
@@ -123,11 +151,26 @@ class Player extends Character {
   }
 
   takeItem(itemName) {
-    this.items.push(this.currentRoom.getItemByName(itemName));
+    const itemToTake = this.currentRoom.getItemByName(itemName);
+    if (itemToTake) {
+      this.items.push(itemToTake);
+      return;
+    }
+    console.log("The item does not exist!");
+    return;
   }
 
   dropItem(itemName) {
-    this.currentRoom.items.push(this.getItemByName(itemName));
+    if(itemName === this.weapon.name || itemName === this.weapon.armor) {
+      console.log('You cannot drop equipments!  You must sell them to a shopkeeper!')
+    }
+    const itemToDrop = this.getItemByName(itemName);
+    if(itemToDrop) {
+      this.currentRoom.items.push(itemToDrop);
+      return;
+    }
+    console.log("You don't have that item!");
+    return;
   }
 
   eatItem(itemName) {

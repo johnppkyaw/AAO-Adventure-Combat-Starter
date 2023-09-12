@@ -23,20 +23,36 @@ class Room {
     const enemies = this.getEnemies(); //array
 
     console.clear();
+
+    //Prints current room's description
     console.log("");
     console.log(this.name);
     console.log("");
     console.log(this.description);
     console.log("");
+    if (this.items.length > 0) {
+      console.log(`Items in the room: ${this.items.map(item => item.name).join(", ")}`);
+      console.log("");
+    }
+    if (this.gold > 0) {
+      console.log(`Free gold in the room: ${this.gold}`);
+      console.log("");
+    }
+    console.log(this.getExitsString());
     console.log("");
-    console.log("");
-    console.log(`Player: ${World.player.name} (HP: ${World.player.health})`);
-    World.player.printInventory();
+    console.log("-".repeat(75));
     console.log("");
 
-    //Prints shopkeepers if in the same room as the player
+    //Prints player's information
+    console.log(`Player: ${World.player.name} (HP: ${World.player.health} | Strength: ${World.player.strength} | Deflect bonus: ${World.player.deflect})`);
+    World.player.printInventory();
+    World.player.printEquipments();
+
+    //Prints shopkeeper and equipments for sale if the shopkeeper is in the same room as the player
     if (shopkeepers.length > 0) {
+      console.log(""); //add empty line
       console.log(`Shopkeeper: ${shopkeepers.map(shopkeeper => shopkeeper.name).join(", ")}`)
+      this.printRoomWithEquipments();
     }
 
     console.log("");
@@ -47,36 +63,28 @@ class Room {
     }
 
     console.log(`Total enemies left: ${World.enemies.length}`)
-    console.log("");
-    if (this.items.length > 0) {
-      console.log(`Items in the room: ${this.items.map(item => item.name).join(", ")}`);
-    }
-    if (this.gold > 0) {
-      console.log(`Free gold in the room: ${this.gold}`);
-    }
-    console.log(this.getExitsString());
+
     console.log("");
   }
 
   printRoomWithEquipments() {
     const { World } = require('./world');
-    this.printRoom();
 
-    console.log(`Here are weapons and armors available for sale.  Type "buy <choice>" to buy the weapon or armor.  You have ${World.player.gold} gold to spend.`)
+    console.log(`Greetings, adventurer!  Here are weapons and armors available for sale.  Type "buy <choice>" to buy the weapon or armor.  You have ${World.player.gold} gold to spend.`)
+    console.log("")
 
     //Print weapons
+    console.log("Weapons:")
     World.weapons.forEach(weapon => {
       console.log(`Choice: ${weapon.choice} | ${weapon.name} | Damage bonus: +${weapon.damageBonus} | Cost: ${weapon.cost}`)
     })
     console.log("")
 
     //Print armors
+    console.log("Armors:")
     World.armors.forEach(armor => {
       console.log(`Choice: ${armor.choice} | ${armor.name} | Deflect bonus: +${armor.deflectBonus} | Cost: ${armor.cost}`)
     })
-
-
-
 
   }
 
