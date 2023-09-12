@@ -54,31 +54,21 @@ class Player extends Character {
 
   }
 
-  // talk(shopkeeperName) {
-  //   const targetShopkeeper = this.currentRoom.getShopkeeperByName(shopkeeperName);
-  //   const targetEnemy = this.currentRoom.getEnemyByName(shopkeeperName);
-  //   if(!targetShopkeeper) {
-  //     if(targetEnemy) {
-  //       console.log('You cannot talk to an enemy!');
-  //       setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
-  //     } else {
-  //       console.log('You cannot talk to the shopkeeper who is not at the current location!');
-  //       setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
-  //     }
-  //     return;
-  //   }
-  //   console.log(`${targetShopkeeper.name} says ${targetShopkeeper.description}`)
-  // }
-
   //buy equipment
   buyEquipment(choice) {
     const { World } = require('./world');
-    const shopkeeper = World.getShopkeeperInRoom(this.currentRoom)
-    if(shopkeeper.length === 0) {
-      console.log(`Equipment choice not found!  Shopkeeper must also be available!`)
+    const shopkeeperPresent = this.currentRoom.getShopkeepers();
+
+    //shopkeeper not found;
+    if(shopkeeperPresent.length === 0) {
+      console.log(`Equipment not found!  Shopkeeper is not available at this location!`)
       return;
     }
+
+    //shopkeeper found;
     const weaponPicked = World.weapons.find(weapon => weapon.choice.toLowerCase() === choice.toLowerCase());
+
+    //buying weapon
     if (weaponPicked) {
       //check if player already has weapon equipped
       if(this.weapon) {
@@ -96,7 +86,8 @@ class Player extends Character {
         return;
       }
     } else {
-      const armorPicked = World.weapons.find(weapon => weapon.choice.toLowerCase() === choice.toLowerCase());
+      //buying armor
+      const armorPicked = World.armors.find(armor => armor.choice.toLowerCase() === choice.toLowerCase());
       if (armorPicked) {
         //check if player already has armor equipped
         if(this.armor) {
@@ -109,16 +100,52 @@ class Player extends Character {
         } else {
           this.armor = armorPicked;
           this.deflect += armorPicked.deflectBonus;
-          this.gold -= weaponPicked.cost;
-          console.log(`You have purchased ${armorPicked.name} which deflect enemy's attack by ${armorPicked.deflectBonus}!`);
+          this.gold -= armorPicked.cost;
+          console.log(`You have purchased ${armorPicked.name} which deflects enemy's attack by ${armorPicked.deflectBonus}!`);
           return;
         }
       }
     }
+    console.log(`Equipment not found!  Pick the one that is available for sale!`)
+    return;
   }
 
   //sell equipement
-  //TBD...
+  sellEquipment(equipment) {
+    //equipment string should be either 'weapon' or 'armor'
+    if (equipment !== "weapon" && equipment !== "armor") {
+      console.log(`You must type "sell weapon" or "sell armor"!`)
+      return;
+    }
+
+    const shopkeeperPresent = this.currentRoom.getShopkeepers();
+
+    //shopkeeper not found;
+    if(shopkeeperPresent.length === 0) {
+      console.log(`Cannot sell equipment!  Shopkeeper is not available at this location!`)
+      return;
+    }
+
+    //shopkeeper found;
+    //if player has weapon or armor
+    if (equipment === "weapon" && this.weapon) {
+      console.log(`You have sold ${this.weapon.name} and earned ${this.weapon.cost} gold!  However, you also lost ${this.weapon.damageBonus} strength!`);
+      this.strength -= this.weapon.damageBonus;
+      this.gold += this.weapon.cost;
+      this.weapon = null;
+      return;
+    } else if (equipment === "armor" && this.armor) {
+      console.log(`You have sold ${this.armor.name} and earned ${this.armor.cost} gold!  However, you also lost ${this.armor.deflectBonus} deflect bonus!`);
+      this.deflect -= this.armor.deflectBonus;
+      this.gold += this.armor.cost;
+      this.armor = null;
+      return;
+    }
+
+    //if player does not have the weapon or armor
+    console.log(`You don't have a weapon or armor to sell!!`)
+    return;
+  }
 
 
   hit(name) {

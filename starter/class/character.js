@@ -7,7 +7,7 @@ class Character {
     this.items = [];
     this.strength = 10;
     this.health = 100;
-    this.gold = 5000;
+    this.gold = 50;
     this.deflect = 0;
   }
 

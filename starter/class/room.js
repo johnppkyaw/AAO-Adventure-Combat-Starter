@@ -70,7 +70,7 @@ class Room {
   printRoomWithEquipments() {
     const { World } = require('./world');
 
-    console.log(`Greetings, adventurer!  Here are weapons and armors available for sale.  Type "buy <choice>" to buy the weapon or armor.  You have ${World.player.gold} gold to spend.`)
+    console.log(`Greetings, adventurer!  You can buy or sell weapons and armors here!.  Type "h" for more info.  You have ${World.player.gold} gold to spend.`)
     console.log("")
 
     //Print weapons

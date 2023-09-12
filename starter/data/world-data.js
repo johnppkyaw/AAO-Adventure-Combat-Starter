@@ -21,44 +21,86 @@ module.exports = {
     {
       id: 4,
       name: "Western point of the crossroad",
-      description: "You are standing at the west point of the  crossroad. To the east, you see the crossroad.",
-      exits: {e: 1}
+      description: "You are standing at the west point of the  crossroad. To the east, you see the crossroad.  To the west, you see the Serpent's Den.",
+      exits: {e: 1, w: 11}
     },
     {
       id: 5,
       name: "Southern point of the crossroad",
-      description: "You are standing at the south point of the crossroad. To the north, you see the crossroad and to the south, you see Ravenfall North",
+      description: "You are standing at the south point of the crossroad. To the north, you see the crossroad and to the south, you see Ravenfall North.",
       exits: {n: 1, s: 6}
     },
     {
       id: 6,
       name: "Ravenfall North",
-      description: "You are standing at Ravenfall North. To the north, you see the southern point of the crossroad and to the south, you see Ravenfall Central",
+      description: "You are standing at Ravenfall North. To the north, you see the southern point of the crossroad and to the south, you see Ravenfall Central.",
       exits: {n: 5, s: 7}
     },
     {
       id: 7,
       name: "Ravenfall Central",
-      description: "You are standing at Ravenfall Central. To the north, you see Ravenfall North, to the south, you see Ravenfall South, to the east, you see Ravenfall East, and to the west, you see Ravenfall West",
+      description: "You are standing at Ravenfall Central. To the north, you see Ravenfall North, to the south, you see Ravenfall South, to the east, you see Ravenfall East, and to the west, you see Ravenfall West.",
       exits: {n: 6, s: 8, e: 10, w: 9}
     },
     {
       id: 8,
       name: "Ravenfall South",
-      description: "You are standing at Ravenfall South. To the north, you see Ravenfall Central",
+      description: "You are standing at Ravenfall South. To the north, you see Ravenfall Central.",
       exits: {n: 7}
     },
     {
       id: 9,
       name: "Ravenfall West",
-      description: "You are standing at Ravenfall West. To the east, you see Ravenfall Central",
+      description: "You are standing at Ravenfall West. To the east, you see Ravenfall Central.",
       exits: {e: 7}
     },
     {
       id: 10,
       name: "Ravenfall East",
-      description: "You are standing at Ravenfall East. To the east, you see Ravenfall Central",
+      description: "You are standing at Ravenfall East. To the east, you see Ravenfall Central.",
       exits: {w: 7}
+    },
+    {
+      id: 11,
+      name: "Serpent's Den",
+      description: "You are standing at Serpent's Den. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
+      exits: {n: 13, s: 14, e: 4, w: 12}
+    },
+    {
+      id: 14,
+      name: "Serpent's Lair",
+      description: "You are standing at Serpent's Lair. To the north, you see Serpent's Den",
+      exits: {n: 11}
+    },
+    {
+      id: ***,
+      name: "***",
+      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
+      exits: {n: ***, s: ***, e: ***, w: ***}
+    },
+    {
+      id: ***,
+      name: "***",
+      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
+      exits: {n: ***, s: ***, e: ***, w: ***}
+    },
+    {
+      id: ***,
+      name: "***",
+      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
+      exits: {n: ***, s: ***, e: ***, w: ***}
+    },
+    {
+      id: ***,
+      name: "***",
+      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
+      exits: {n: ***, s: ***, e: ***, w: ***}
+    },
+    {
+      id: ***,
+      name: "***",
+      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
+      exits: {n: ***, s: ***, e: ***, w: ***}
     }
   ],
   items: [

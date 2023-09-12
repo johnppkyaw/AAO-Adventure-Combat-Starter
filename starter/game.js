@@ -23,6 +23,8 @@ function printHelp() {
   console.log("  Type 'take <item>' to take an item");
   console.log("  Type 'drop <item>' to drop an item");
   console.log("  Type 'eat <item>' to eat a food item");
+  console.log("  Type 'buy <choice>' to buy an equipment from a shopkeeper");
+  console.log("  Type 'sell weapon' or 'sell armor' to sell an equipment to a shopkeeper");
   console.log("");
 }
 
@@ -98,12 +100,20 @@ function processCommand() {
       player.hit(enemyName);
 
     } else if (cmd.startsWith("buy ")) {
-      const choice = cmd.split(" ")[1].toLowerCase()
+      const choice = cmd.split("buy ")[1].toLowerCase()
       console.clear();
       player.buyEquipment(choice);
       setTimeout(() => {
         player.currentRoom.printRoom();
-      }, 3000);
+      }, 5000);
+
+    } else if (cmd.startsWith("sell ")) {
+      const choice = cmd.split("sell ")[1].toLowerCase()
+      console.clear();
+      player.sellEquipment(choice);
+      setTimeout(() => {
+        player.currentRoom.printRoom();
+      }, 5000);
 
     } else {
       console.log("Invalid command. Type 'h' for help.");
