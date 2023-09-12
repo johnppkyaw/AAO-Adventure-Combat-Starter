@@ -75,7 +75,7 @@ class Player extends Character {
         console.log(`You already have ${this.weapon.name} equiped. Sell that first`)
         return;
         //check if player can afford it
-      } else if (weaponPicked.gold > this.gold) {
+      } else if (weaponPicked.cost > this.gold) {
         console.log(`Not enough gold!`)
         return;
       } else {
@@ -94,7 +94,7 @@ class Player extends Character {
           console.log(`You already have ${this.armor.name} equiped. Sell that first`)
           return;
           //check if player can afford it
-        } else if (armorPicked.gold > this.gold) {
+        } else if (armorPicked.cost > this.gold) {
           console.log(`Not enough gold!`)
           return;
         } else {

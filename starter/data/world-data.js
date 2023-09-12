@@ -9,14 +9,14 @@ module.exports = {
     {
       id: 2,
       name: "Northern point of the crossroad",
-      description: "You are standing at the north point of the crossroad. To the south, you see the crossroad.",
-      exits: {s: 1}
+      description: "You are standing at the north point of the crossroad. To the north, you see The Dragon's Abyss and to the south, you see the crossroad.",
+      exits: {n: 19, s: 1}
     },
     {
       id: 3,
       name: "Eastern point of the crossroad",
-      description: "You are standing at the east point of the crossroad. To the west, you see the crossroad.",
-      exits: {w: 1}
+      description: "You are standing at the east point of the crossroad. To the west, you see the crossroad, and to the east, you see Frostbite Caverns.",
+      exits: {w: 1, e: 15}
     },
     {
       id: 4,
@@ -63,44 +63,74 @@ module.exports = {
     {
       id: 11,
       name: "Serpent's Den",
-      description: "You are standing at Serpent's Den. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
+      description: "You are standing at Serpent's Den. To the north, you see Venomous Abyss, to the east, you see western point of the crossroad, to the west, you see Fangfall Passage, and to the south, you see Serpent's Lair.",
       exits: {n: 13, s: 14, e: 4, w: 12}
     },
     {
       id: 14,
       name: "Serpent's Lair",
-      description: "You are standing at Serpent's Lair. To the north, you see Serpent's Den",
+      description: "You are standing at Serpent's Lair. To the north, you see Serpent's Den.",
       exits: {n: 11}
     },
     {
-      id: ***,
-      name: "***",
-      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
-      exits: {n: ***, s: ***, e: ***, w: ***}
+      id: 13,
+      name: "Venomous Abyss",
+      description: "You are standing at Venomous Abyss. To the south, you see Serpent's Den.",
+      exits: {s: 11}
     },
     {
-      id: ***,
-      name: "***",
-      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
-      exits: {n: ***, s: ***, e: ***, w: ***}
+      id: 12,
+      name: "Fangfall Passage",
+      description: "You are standing at Fangfall Passage. To the east, you see Serpent's Den.",
+      exits: {e: 11}
     },
     {
-      id: ***,
-      name: "***",
-      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
-      exits: {n: ***, s: ***, e: ***, w: ***}
+      id: 15,
+      name: "Frostbite Caverns",
+      description: "You are standing at Frostbite Caverns. To the north, you see Glacial Nexus, to the east, you see Crystaline Catacombs, to the west, you see eastern point of the crossroad, and to the south, you see Frostfire Chasm.",
+      exits: {n: 18, s: 17, e: 16, w: 3}
     },
     {
-      id: ***,
-      name: "***",
-      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
-      exits: {n: ***, s: ***, e: ***, w: ***}
+      id: 18,
+      name: "Glacial Nexus",
+      description: "You are standing at Glacial Nexus. To the south, you see Frostbite Caverns.",
+      exits: {s: 15}
     },
     {
-      id: ***,
-      name: "***",
-      description: "You are standing at ***. To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***",
-      exits: {n: ***, s: ***, e: ***, w: ***}
+      id: 16,
+      name: "Crystaline Catacombs",
+      description: "You are standing at Crystaline Catacombs. To the west, you see Frostbite Caverns.",
+      exits: {w: 15}
+    },
+    {
+      id: 17,
+      name: "Frostfire Chasm",
+      description: "You are standing at Frostfire Chasm. To the north, you see Frostbite Caverns.",
+      exits: {n: 15}
+    },
+    {
+      id: 19 ,
+      name: "The Dragon's Abyss",
+      description: "You are standing at The Dragon's Abyss. To the north, you see Sapphire Glade, to the east, you see Astral Nexus, to the west, you see Shadowed Hollow, and to the south, you see the northern point of the crossroad.",
+      exits: {n: 21, s: 2, e: 22, w: 20}
+    },
+    {
+      id: 20,
+      name: "Shadowed Hollow",
+      description: "You are standing at Shadowed Hollow. To the east, you see The Dragon's Abyss.",
+      exits: {e: 19}
+    },
+    {
+      id: 21,
+      name: "Sapphire Glade",
+      description: "You are standing at Sapphire Glade. To the south, you see The Dragon's Abyss.",
+      exits: {s: 19}
+    },
+    {
+      id: 22,
+      name: "Astral Nexus",
+      description: "You are standing at Astral Nexus. To the west, you see The Dragon's Abyss.",
+      exits: {w: 19}
     }
   ],
   items: [
@@ -119,13 +149,15 @@ module.exports = {
   enemies: [
     {
       name: "goblin",
+      species: "goblin",
       description: "A mean-looking goblin",
-      room: 3
+      room: 15
     },
     {
       name: "snake",
+      species: "snake",
       description: "A venomous snake",
-      room: 5
+      room: 11
     }
   ],
   weapons: [
@@ -186,24 +218,15 @@ module.exports = {
       description: "Get your finest weapon and armor here",
       room: 7,
       isAlly: true
-    },
-    {
-      name: "Savior B",
-      description: "Get your finest weapon and armor here",
-      room: 4,
-      isAlly: true
-    },
-    {
-      name: "Savior C",
-      description: "Get your finest weapon and armor here",
-      room: 2,
-      isAlly: true
-    },
-    {
-      name: "Savior D",
-      description: "Get your finest weapon and armor here",
-      room: 3,
-      isAlly: true
     }
   ]
 }
+
+//Room template
+// ,
+//     {
+//       id: ***,
+//       name: "***",
+//       description: "You are standing at ***. To the north, you see Frostbite Caverns.  To the north, you see ***, to the east, you see ***, to the west, you see ***, and to the south, you see ***.",
+//       exits: {n: ***, s: ***, e: ***, w: ***}
+//     }
