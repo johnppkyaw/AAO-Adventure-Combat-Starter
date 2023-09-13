@@ -1,8 +1,11 @@
 const {Character} = require('./character');
+const {Food} = require('./food');
 
 class Enemy extends Character {
-  constructor(name, description, currentRoom) {
+  constructor(name, description, currentRoom, health, strength) {
     super(name, description, currentRoom);
+    this.health = health;
+    this.strength = strength;
     this.cooldown = 3000;
     this.attackTarget = null;
   }
@@ -30,7 +33,14 @@ class Enemy extends Character {
   }
 
   takeSandwich() {
-    // Fill this in
+    const itemToTake = this.currentRoom.items.filter(item => item instanceof Food).pop();
+    if (itemToTake) {
+      console.log(`Enemy ${this.name} took ${itemToTake.name}!`);
+      this.items.push(itemToTake);
+      this.currentRoom.getItemByName(itemToTake.name);
+      return;
+    }
+    return;
   }
 
   // Print the alert only if player is standing in the same room
@@ -54,12 +64,14 @@ class Enemy extends Character {
     } else {
       const cooldown = this.cooldown;
       this.rest();
-      setTimeout(() => {
-        console.log(`Enemy ${this.name} attacked back with ${this.strength} damage and fled`);
-        this.randomMove.bind(this)();
-      }, cooldown + 2000);
+      this.takeSandwich();
       this.attackTarget.applyDamage(this.strength);
+      this.randomMove();
+      setTimeout(() => {
+        console.log(`Enemy ${this.name} attacked back and fled to ${this.currentRoom.name}`);
+      }, cooldown + 3000);
       this.cooldown += 1000;
+
     }
   }
 

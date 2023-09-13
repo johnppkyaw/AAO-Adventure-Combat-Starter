@@ -111,7 +111,7 @@ class World {
 
       let enemyData = enemyList[i];
       let enemyRoom = World.rooms[enemyData.room];
-      let newEnemy = new Enemy(enemyData.name, enemyData.description, enemyRoom);
+      let newEnemy = new Enemy(enemyData.name, enemyData.description, enemyRoom, enemyData.health, enemyData.strength);
       World.enemies.push(newEnemy);
     }
 

@@ -17,8 +17,13 @@ class Character {
       this.die();
       return;
     }
-    if(this.deflect > 0) console.log(`Armor deflected ${this.deflect} damage from enemy's ${amount} attack point.`)
-    this.health -= (amount - this.delfect);
+    if(this.deflect > 0) {
+      this.health -= (amount - this.deflect);
+      console.log(`Armor deflected ${this.deflect} damage from enemy's ${amount} attack point.`)
+      return;
+    }
+    this.health -= amount;
+    return;
   }
 
   //loot gold in current room

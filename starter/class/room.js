@@ -47,24 +47,22 @@ class Room {
     console.log(`Player: ${World.player.name} (HP: ${World.player.health} | Strength: ${World.player.strength} | Deflect bonus: ${World.player.deflect})`);
     World.player.printInventory();
     World.player.printEquipments();
-
-    //Prints shopkeeper and equipments for sale if the shopkeeper is in the same room as the player
-    if (shopkeepers.length > 0) {
-      console.log(""); //add empty line
-      console.log(`Shopkeeper: ${shopkeepers.map(shopkeeper => shopkeeper.name).join(", ")}`)
-      this.printRoomWithEquipments();
-    }
-
     console.log("");
 
     //Prints enemies if in the same room as the player
     if(enemies.length > 0) {
       console.log(`Enemies in current location: ${enemies.map(enemy => enemy.name + " (HP: " + enemy.health + ")").join(", ")}`);
     }
-
     console.log(`Total enemies left: ${World.enemies.length}`)
-
     console.log("");
+
+    //Prints shopkeeper and equipments for sale if the shopkeeper is in the same room as the player
+    if (shopkeepers.length > 0) {
+      console.log(`Shopkeeper: ${shopkeepers.map(shopkeeper => shopkeeper.name).join(", ")}`)
+      this.printRoomWithEquipments();
+      console.log("");
+    }
+
   }
 
   printRoomWithEquipments() {
@@ -113,7 +111,7 @@ class Room {
   getItemByName(name) {
     let index = -1;
     for (let i = 0; i < this.items.length; i++) {
-        if (this.items[i].name === name) {
+        if (this.items[i].name.toLowerCase() === name.toLowerCase()) {
             index = i;
         }
         break;
@@ -124,7 +122,7 @@ class Room {
   }
 
   getEnemyByName(name) {
-    return this.getEnemies().filter(enemy => enemy.name === name).pop();
+    return this.getEnemies().filter(enemy => enemy.name.toLowerCase() === name.toLowerCase()).pop();
   }
 
   getShopkeeperByName(name) {

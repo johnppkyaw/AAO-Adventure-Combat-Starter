@@ -142,22 +142,34 @@ module.exports = {
     {
       name: "sandwich",
       description: "A tasty looking sandwich",
-      room: 2,
+      room: 15,
       isFood: true
     }
   ],
   enemies: [
     {
-      name: "goblin",
+      name: "GoblinWarrior",
       species: "goblin",
       description: "A mean-looking goblin",
+      health: 25,
+      strength: 20,
       room: 15
     },
     {
-      name: "snake",
+      name: "VenomstrikeSerpent",
       species: "snake",
-      description: "A venomous snake",
+      description: "A lethal serpent with venomous, deadly strikes",
+      health: 50,
+      strength: 25,
       room: 11
+    },
+    {
+      name: "InfernalWyrmgaroth",
+      species: "Dragon",
+      description: "An ancient colossal dragon ablaze with searing flames",
+      health: 100,
+      strength: 50,
+      room: 19
     }
   ],
   weapons: [
@@ -167,7 +179,7 @@ module.exports = {
       description: "adds bonus damage to your attack",
       damageBonus: 10,
       isWeapon: true,
-      cost: 100
+      cost: 25
     },
     {
       choice: "WB",
@@ -175,7 +187,7 @@ module.exports = {
       description: "adds bonus damage to your attack",
       damageBonus: 20,
       isWeapon: true,
-      cost: 200
+      cost: 50
     },
     {
       choice: "WC",
@@ -183,7 +195,7 @@ module.exports = {
       description: "adds bonus damage to your attack",
       damageBonus: 40,
       isWeapon: true,
-      cost: 400
+      cost: 75
     }
   ],
   armors: [
@@ -193,7 +205,7 @@ module.exports = {
       description: "deflects damage from enemy's attack",
       deflectBonus: 10,
       isArmor: true,
-      cost: 100
+      cost: 25
     },
     {
       choice: "AB",
@@ -201,7 +213,7 @@ module.exports = {
       description: "deflects damage from enemy's attack",
       deflectBonus: 20,
       isArmor: true,
-      cost: 200
+      cost: 50
     },
     {
       choice: "AC",
@@ -209,7 +221,7 @@ module.exports = {
       description: "deflects damage from enemy's attack",
       deflectBonus: 40,
       isArmor: true,
-      cost: 400
+      cost: 75
     }
   ],
   shopkeepers: [

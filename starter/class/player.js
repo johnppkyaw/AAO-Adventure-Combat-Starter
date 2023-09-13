@@ -41,14 +41,14 @@ class Player extends Character {
     if (!this.weapon) {
       console.log(`${this.name} is not equipped with any weapons.`);
     } else {
-      console.log(`${this.name} is currently equipped with ${this.weapon}.`);
+      console.log(`${this.name} is currently equipped with ${this.weapon.name}.`);
     }
 
     //prints the equipped armor
     if (!this.armor) {
       console.log(`${this.name} is not equipped with any armors.`);
     } else {
-      console.log(`${this.name} is currently equipped with ${this.armor}.`);
+      console.log(`${this.name} is currently equipped with ${this.armor.name}.`);
     }
 
 
@@ -149,23 +149,41 @@ class Player extends Character {
 
 
   hit(name) {
+    name = name.toLowerCase();
     const targetEnemy = this.currentRoom.getEnemyByName(name);
     const targetShopkeeper = this.currentRoom.getShopkeeperByName(name);
     if(!targetEnemy) {
       if(targetShopkeeper) {
-        console.log('You cannot attack the shopkeepers!');setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
+        console.log('You cannot attack the shopkeepers!');
       } else {
         console.log('You cannot attack the enemy who is not at the current location!');
-        setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), 3000);
       }
       return;
     }
     targetEnemy.applyDamage(this.strength);
-    console.log(`You attacked ${name}!`);
+    console.log(`You attacked ${targetEnemy.name}!`);
     targetEnemy.attackTarget = this;
-    const enemyCooldown = targetEnemy.cooldown;
+
+    if(targetEnemy.health <= 0) {
+      const { World } = require('./world');
+      console.log(`You have defeated ${targetEnemy.name}!  Be sure to collect the gold dropped by the enemy!`)
+      const enemyIndex = World.enemies.findIndex((enemy => enemy.name === targetEnemy.name))
+      targetEnemy.die();
+      World.enemies.splice(enemyIndex, 1);
+
+      if (World.enemies.length === 0) {
+        console.log(`Congratulations!  You have defeated the game!`)
+        setTimeout(function() {
+          process.exit();
+        }, 3000)
+        return;
+      }
+      return;
+    }
+    //Enemy attacks
     targetEnemy.attack();
-    setTimeout(this.currentRoom.printRoom.bind(this.currentRoom), enemyCooldown + 4000);
+
+    //If player reaches 0 health, gameover.
     if(this.health <= 0) {
       this.die();
       return;
@@ -174,17 +192,29 @@ class Player extends Character {
 
   die() {
     console.log("You are dead!");
-    process.exit();
+    setTimeout(function() {
+      process.exit();
+    }, 3000)
+
   }
 
   takeItem(itemName) {
+    if (itemName.toLowerCase() === 'gold') {
+      this.lootGold();
+      return;
+    }
+    if (this.currentRoom.items.length === 0) {
+      console.log("No items to take in this room!");
+      return;
+    }
     const itemToTake = this.currentRoom.getItemByName(itemName);
-    if (itemToTake) {
+    if (itemToTake === undefined) {
+      console.log("The item does not exist!");
+      return;
+    } else {
       this.items.push(itemToTake);
       return;
     }
-    console.log("The item does not exist!");
-    return;
   }
 
   dropItem(itemName) {
@@ -211,7 +241,11 @@ class Player extends Character {
     }
     if (index !== -1) {
         this.items.splice(index, 1);
-        console.log(`${this.name} has eaten ${itemName}`);
+        if (this.health <= 100) {
+
+        }
+        this.health += 10;
+        console.log(`${this.name} has eaten ${itemName} and recovered 10 health points!`);
         return;
     }
     console.log("The item does not exist or is not a food!")

@@ -79,25 +79,40 @@ function processCommand() {
 
     } else if (cmd.startsWith("take ")) {
       let itemName = cmd.split(" ")[1];
-
+      console.clear();
       player.takeItem(itemName);
-      player.currentRoom.printRoom();
+      setTimeout(() => {
+        player.currentRoom.printRoom();
+      }, 5000);
 
     } else if (cmd.startsWith("drop ")) {
       let itemName = cmd.split(" ")[1];
-
+      console.clear();
       player.dropItem(itemName);
       player.currentRoom.printRoom();
 
     } else if (cmd.startsWith("eat ")) {
       let itemName = cmd.split(" ")[1];
-
+      console.clear();
       player.eatItem(itemName);
+      setTimeout(() => {
+        player.currentRoom.printRoom();
+      }, 5000);
 
     } else if (cmd.startsWith("hit ")) {
       let enemyName = cmd.split(" ")[1];
-
+      console.log(enemyName);
+      let enemyCooldown;
+      const enemyInRoom = player.currentRoom.getEnemyByName(enemyName);
+      console.log(enemyInRoom)
+      if (enemyInRoom) {
+        enemyCooldown = enemyInRoom.cooldown;
+      }
+      console.clear();
       player.hit(enemyName);
+      setTimeout(() => {
+        player.currentRoom.printRoom();
+      }, enemyCooldown + 8000);
 
     } else if (cmd.startsWith("buy ")) {
       const choice = cmd.split("buy ")[1].toLowerCase()
@@ -105,7 +120,7 @@ function processCommand() {
       player.buyEquipment(choice);
       setTimeout(() => {
         player.currentRoom.printRoom();
-      }, 5000);
+      }, 3000);
 
     } else if (cmd.startsWith("sell ")) {
       const choice = cmd.split("sell ")[1].toLowerCase()
@@ -113,7 +128,7 @@ function processCommand() {
       player.sellEquipment(choice);
       setTimeout(() => {
         player.currentRoom.printRoom();
-      }, 5000);
+      }, 3000);
 
     } else {
       console.log("Invalid command. Type 'h' for help.");
